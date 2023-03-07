@@ -2,14 +2,45 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { determineColor } from "@/util/determineColor";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [hunger, setHunger] = useState<number>(40);
-  const [comfort, setComfort] = useState<number>(60);
-  const [happy, setHappy] = useState<number>(30);
+  const [hunger, setHunger] = useState<number>(100);
+  const [comfort, setComfort] = useState<number>(100);
+  const [happy, setHappy] = useState<number>(100);
+
+  useEffect(() => {
+    const hungerInterval = setInterval(() => {
+      if (hunger > 0) {
+        setHunger(hunger - Math.abs(Math.round(Math.random() * 5)));
+      }
+    }, 5000);
+
+    return () => clearInterval(hungerInterval);
+  }, [hunger]);
+
+  useEffect(() => {
+    const comfortInterval = setInterval(() => {
+      if (comfort > 0) {
+        setComfort(comfort - Math.abs(Math.round(Math.random() * 5)));
+      }
+    }, 4000);
+
+    return () => clearInterval(comfortInterval);
+  }, [comfort]);
+
+  useEffect(() => {
+    const happyInterval = setInterval(() => {
+      if (happy > 0) {
+        setHunger(happy - Math.abs(Math.round(Math.random() * 5)));
+      }
+    }, 7000);
+
+    return () => clearInterval(happyInterval);
+  }, [happy]);
 
   return (
     <>
@@ -21,9 +52,12 @@ export default function Home() {
       </Head>
       <main
         className={
-          "rounded-lg bg-black p-6  max-h-[600px] max-w-[400px] shadow-lg"
+          "mx-auto rounded-lg bg-black p-6  max-h-[600px] max-w-[400px] shadow-lg"
         }
       >
+        <p className="text-white text-2xl font-black text-center mb-3">
+          PixelPals
+        </p>
         <div
           style={{
             backgroundImage: "url(/background.png)",
@@ -33,17 +67,43 @@ export default function Home() {
           }}
           className="bg-contain mx-auto relative"
         >
-          <div className="bg-white opacity-80 px-3">
-            <span className="w-full flex space-x-3 items-center">
+          <div className="bg-white bg-opacity-80 px-3 pb-3">
+            <span className="w-full -space-y-1 items-center">
               <p>Hunger</p>
-              <div className="relative bg-white">
+              <div className="h-2  w-full bg-black border-yellow-600">
                 <div
-                  className={`absolute w-full rounded-full h-1 bg-red-500 border w-${hunger}% `}
+                  className={`w-full h-2 bg-${determineColor(
+                    hunger
+                  )}-500 transition `}
+                  style={{
+                    width: `${hunger}%`,
+                  }}
                 ></div>
               </div>
             </span>
 
-            <span></span>
+            <span className="w-full -space-y-1 items-center">
+              <p>{"Comfort"}</p>
+              <div className="h-2  w-full bg-black border-yellow-600">
+                <div
+                  className={`w-full h-2 bg-${determineColor(comfort)}-500 `}
+                  style={{
+                    width: `${comfort}%`,
+                  }}
+                ></div>
+              </div>
+            </span>
+            <span className="w-full -space-y-1 items-center">
+              <p>Happiness</p>
+              <div className="h-2  w-full bg-black border-yellow-600">
+                <div
+                  className={`w-full h-2  bg-${determineColor(happy)}-500 `}
+                  style={{
+                    width: `${happy}%`,
+                  }}
+                ></div>
+              </div>
+            </span>
 
             <span></span>
           </div>
@@ -54,13 +114,29 @@ export default function Home() {
         </div>
 
         <div className="space-y-4 mt-6">
-          <button className="border-2 hover:bg-yellow-500 hover:border-yellow-100 rounded-md border-yellow-500 bg-yellow-100 text-xl w-full">
+          <button
+            onClick={() => {
+              hunger < 100 && setHunger(hunger + 5 <= 100 ? hunger + 5 : 100);
+            }}
+            className="border-2 hover:bg-yellow-500 hover:border-yellow-100 rounded-md border-yellow-500 bg-yellow-100 text-xl w-full"
+          >
             Feed{" "}
           </button>
-          <button className="border-2 hover:bg-yellow-500 hover:border-yellow-100  rounded-md border-yellow-500 bg-yellow-100 text-xl w-full">
+          <button
+            onClick={() => {
+              comfort < 100 &&
+                setComfort(comfort + 5 <= 100 ? comfort + 5 : 100);
+            }}
+            className="border-2 hover:bg-yellow-500 hover:border-yellow-100  rounded-md border-yellow-500 bg-yellow-100 text-xl w-full"
+          >
             Pet{" "}
           </button>
-          <button className="border-2 hover:bg-yellow-500 hover:border-yellow-100  rounded-md border-yellow-500 bg-yellow-100 text-xl w-full">
+          <button
+            onClick={() => {
+              happy < 100 && setHappy(happy + 5 <= 100 ? happy + 5 : 100);
+            }}
+            className="border-2 hover:bg-yellow-500 hover:border-yellow-100  rounded-md border-yellow-500 bg-yellow-100 text-xl w-full"
+          >
             Play{" "}
           </button>
         </div>
