@@ -36,9 +36,11 @@ export default function Home() {
           <div className="bg-white opacity-80 px-3">
             <span className="w-full flex space-x-3 items-center">
               <p>Hunger</p>
-              <div
-                className={`w-full rounded-full h-1 bg-red-500 border w-${hunger}% border-white`}
-              ></div>
+              <div className="relative bg-white">
+                <div
+                  className={`absolute w-full rounded-full h-1 bg-red-500 border w-${hunger}% `}
+                ></div>
+              </div>
             </span>
 
             <span></span>
