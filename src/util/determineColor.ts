@@ -1,9 +1,9 @@
 export function determineColor(value: number) {
-  if (value <= 50) {
+  if (value <= 25) {
     return "red";
   }
 
-  if (value >= 75) {
+  if (value >= 50) {
     return "green";
   }
 

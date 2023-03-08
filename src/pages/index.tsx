@@ -12,12 +12,16 @@ export default function Home() {
   const [comfort, setComfort] = useState<number>(100);
   const [happy, setHappy] = useState<number>(100);
 
+  const [food, setFood] = useState<boolean>(false);
+  const [pet, setPet] = useState<boolean>(false);
+  const [play, setPlay] = useState<boolean>(false);
+
   useEffect(() => {
     const hungerInterval = setInterval(() => {
       if (hunger > 0) {
-        setHunger(hunger - Math.abs(Math.round(Math.random() * 5)));
+        setHunger((hung) => hung - Math.abs(Math.round(Math.random() * 5)));
       }
-    }, 5000);
+    }, 6000);
 
     return () => clearInterval(hungerInterval);
   }, [hunger]);
@@ -25,9 +29,9 @@ export default function Home() {
   useEffect(() => {
     const comfortInterval = setInterval(() => {
       if (comfort > 0) {
-        setComfort(comfort - Math.abs(Math.round(Math.random() * 5)));
+        setComfort((com) => com - Math.abs(Math.round(Math.random() * 5)));
       }
-    }, 4000);
+    }, 8000);
 
     return () => clearInterval(comfortInterval);
   }, [comfort]);
@@ -35,9 +39,9 @@ export default function Home() {
   useEffect(() => {
     const happyInterval = setInterval(() => {
       if (happy > 0) {
-        setHunger(happy - Math.abs(Math.round(Math.random() * 5)));
+        setHappy((hap) => hap - Math.abs(Math.round(Math.random() * 5)));
       }
-    }, 7000);
+    }, 10000);
 
     return () => clearInterval(happyInterval);
   }, [happy]);
@@ -97,7 +101,7 @@ export default function Home() {
               <p>Happiness</p>
               <div className="h-2  w-full bg-black border-yellow-600">
                 <div
-                  className={`w-full h-2  bg-${determineColor(happy)}-500 `}
+                  className={`w-full h-2 bg-${determineColor(happy)}-500 `}
                   style={{
                     width: `${happy}%`,
                   }}
@@ -109,14 +113,36 @@ export default function Home() {
           </div>
           <img
             src="/character.png"
-            className="h-[100px] absolute mx-auto bottom-5 left-[30%]"
+            className={`h-[100px] ${
+              play && "animate-animatefast"
+            } absolute mx-auto bottom-5 left-[30%]`}
           />
+
+          <img
+            src="/petting.gif"
+            className={`${
+              !pet && "hidden"
+            } h-[75px] absolute mx-auto bottom-12 left-[25%]`}
+          />
+          <div
+            style={{
+              backgroundImage: "url(/foodfalling.gif)",
+              height: "300px",
+              width: "300px",
+              backgroundSize: "contain",
+            }}
+            className={`bg-contain absolute top-0 ${!food && "hidden"}`}
+          ></div>
         </div>
 
         <div className="space-y-4 mt-6">
           <button
             onClick={() => {
               hunger < 100 && setHunger(hunger + 5 <= 100 ? hunger + 5 : 100);
+              setFood(true);
+              setTimeout(() => {
+                setFood(false);
+              }, 2000);
             }}
             className="border-2 hover:bg-yellow-500 hover:border-yellow-100 rounded-md border-yellow-500 bg-yellow-100 text-xl w-full"
           >
@@ -126,6 +152,11 @@ export default function Home() {
             onClick={() => {
               comfort < 100 &&
                 setComfort(comfort + 5 <= 100 ? comfort + 5 : 100);
+
+              setPet(true);
+              setTimeout(() => {
+                setPet(false);
+              }, 1200);
             }}
             className="border-2 hover:bg-yellow-500 hover:border-yellow-100  rounded-md border-yellow-500 bg-yellow-100 text-xl w-full"
           >
@@ -134,6 +165,10 @@ export default function Home() {
           <button
             onClick={() => {
               happy < 100 && setHappy(happy + 5 <= 100 ? happy + 5 : 100);
+              setPlay(true);
+              setTimeout(() => {
+                setPlay(false);
+              }, 800);
             }}
             className="border-2 hover:bg-yellow-500 hover:border-yellow-100  rounded-md border-yellow-500 bg-yellow-100 text-xl w-full"
           >
