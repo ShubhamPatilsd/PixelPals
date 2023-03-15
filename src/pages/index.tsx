@@ -21,7 +21,8 @@ export default function Home() {
       if (hunger > 0) {
         setHunger((hung) => hung - Math.abs(Math.round(Math.random() * 5)));
       }
-    }, 6000);
+      // }, 6000);
+    }, 2000);
 
     return () => clearInterval(hungerInterval);
   }, [hunger]);
@@ -31,7 +32,8 @@ export default function Home() {
       if (comfort > 0) {
         setComfort((com) => com - Math.abs(Math.round(Math.random() * 5)));
       }
-    }, 8000);
+      // }, 8000);
+    }, 3000);
 
     return () => clearInterval(comfortInterval);
   }, [comfort]);
@@ -41,7 +43,8 @@ export default function Home() {
       if (happy > 0) {
         setHappy((hap) => hap - Math.abs(Math.round(Math.random() * 5)));
       }
-    }, 10000);
+      // }, 10000);
+    }, 2500);
 
     return () => clearInterval(happyInterval);
   }, [happy]);
@@ -113,16 +116,14 @@ export default function Home() {
           </div>
           <img
             src="/character.png"
-            className={`h-[100px] ${
-              play && "animate-animatefast"
-            } absolute mx-auto bottom-5 left-[30%]`}
+            className={`h-[100px] ${play &&
+              "animate-animatefast"} absolute mx-auto bottom-5 left-[30%]`}
           />
 
           <img
             src="/petting.gif"
-            className={`${
-              !pet && "hidden"
-            } h-[75px] absolute mx-auto bottom-12 left-[25%]`}
+            className={`${!pet &&
+              "hidden"} h-[75px] absolute mx-auto bottom-12 left-[25%]`}
           />
           <div
             style={{
